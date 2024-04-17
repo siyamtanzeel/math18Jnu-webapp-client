@@ -3,15 +3,23 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Routes/Routes.jsx";
-import DarkModeProvider from "./Providers/DarkModeProvider.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import AuthProvider from "./Providers/AuthProvider.jsx";
+import DarkModeProvider from "./Providers/DarkModeProvider.jsx";
+import { HelmetProvider } from "react-helmet-async";
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
+    <QueryClientProvider client={queryClient}>
       <DarkModeProvider>
-        <RouterProvider router={router}></RouterProvider>
+        <AuthProvider>
+          <HelmetProvider>
+            <RouterProvider router={router}></RouterProvider>
+          </HelmetProvider>
+        </AuthProvider>
       </DarkModeProvider>
-    </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

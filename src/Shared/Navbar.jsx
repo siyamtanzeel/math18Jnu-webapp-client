@@ -1,144 +1,258 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
+import { AuthContext } from "../Providers/AuthProvider";
+import { auth } from "../Firebase/firebase.config";
+import { signOut } from "firebase/auth";
+import useStudents from "../hooks/useStudents";
+import "./Navbar.css";
 import { DarkModeContext } from "../Providers/DarkModeProvider";
-import { FaMoon } from "react-icons/fa";
-import { FaSun } from "react-icons/fa";
-import UserDropdown from "../Components/UserDropdown";
-import UserModal from "../Components/UserModal";
 
-export default function Navbar() {
-  const [isToggleOpen, setIsToggleOpen] = useState(false);
+const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
-  const [pathname, setPathname] = useState(window.location.pathname);
-  const NavbarItems = [
-    {
-      name: "Home",
-      link: "/",
-    },
-    {
-      name: "Resources",
-      link: "/resources",
-    },
-    {
-      name: "Members",
-      link: "/members",
-    },
-    {
-      name: "Gallery",
-      link: "/gallery",
-    },
-  ];
+  console.log(darkMode);
+  const { user, setUser, student, authLoading, setAuthLoading, setStudent } =
+    useContext(AuthContext);
+  const { data, isLoading } = useStudents();
+  const signOutHandler = () => {
+    setAuthLoading(true);
+    signOut(auth).then(() => {
+      setAuthLoading(false);
+      setStudent(null);
+      setUser(null);
+    });
+  };
   return (
-    <div>
-      {/*<!-- Component: Navbar with Topbar --> */}
-      {/*<!-- Top bar --> */}
+    <div className="navbar bg-base-100/90 text-base-content sticky top-0 z-50 rounded-b-lg bg-opacity-80 backdrop-blur-md max-h-16 shadow-lg">
+      <div className="navbar-start">
+        {/* Mobile Menu */}
+        <div className="drawer lg:hidden">
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+            {/* Page content here */}
+            <label htmlFor="my-drawer" className="drawer-button">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost lg:hidden">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </div>
+            </label>
+          </div>
+          <div className="drawer-side">
+            <label
+              htmlFor="my-drawer"
+              aria-label="close sidebar"
+              className="drawer-overlay"></label>
+            <ul
+              tabIndex={0}
+              className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+              <li>
+                <NavLink className="navlink" to="/">
+                  Home
+                </NavLink>
+              </li>
 
-      {/*<!-- Header --> */}
-      <header className="border-b-1 fixed top-0 left-0 z-20 w-full border-b border-slate-200 dark:border-slate-700  bg-white/50 dark:bg-slate-900/80 shadow-lg shadow-slate-700/5 after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 backdrop-blur-md lg:after:hidden transition-colors duration-300">
-        <div className="relative mx-auto max-w-full px-6 lg:max-w-5xl xl:max-w-7xl 2xl:max-w-[96rem]">
-          <nav
-            aria-label="main navigation"
-            className="flex h-[4.5rem] items-stretch justify-between font-medium text-slate-700 dark:text-white/70"
-            role="navigation">
-            {/*      <!-- Brand logo --> */}
-            <div className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1">
-              <img
-                src={
+              <li className="">
+                <a>Members</a>
+                <ul className="p-2">
+                  <li>
+                    <NavLink to="/members">All</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/findByBlood">By Blood</NavLink>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <NavLink to="/resources">Resources</NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard">Dashboard</NavLink>
+              </li>
+              {/* Dark Mode Controller */}
+              <li className=" mt-10">
+                <label className="swap swap-rotate ">
+                  {/* this hidden checkbox controls the state */}
+                  <input
+                    type="checkbox"
+                    className="theme-controller w-full"
+                    value="dark"
+                    onClick={() => {
+                      darkMode
+                        ? localStorage.setItem("theme", "light")
+                        : localStorage.setItem("theme", "dark");
+                      setDarkMode(!darkMode);
+                    }}
+                  />
+
+                  {/* sun icon */}
+                  <svg
+                    className="swap-off fill-current w-6 h-6 "
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+                  </svg>
+
+                  {/* moon icon */}
+                  <svg
+                    className="swap-on fill-current w-6 h-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+                  </svg>
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="dropdown"></div>
+        <div>
+          <Link to="/">
+            <img
+              src={
+                darkMode
+                  ? "/public/img/eccentric18logo-white.png"
+                  : "/public/img/eccentric18logo-black.png"
+              }
+              alt=""
+              className="w-16"
+            />
+          </Link>
+        </div>
+      </div>
+      {/* desktop menu */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            {/* Dark Mode Controller */}
+            <label className="swap swap-rotate ">
+              {/* this hidden checkbox controls the state */}
+              <input
+                type="checkbox"
+                className="theme-controller"
+                value="dark"
+                onClick={() => {
                   darkMode
-                    ? "/public/img/eccentric18logo-white.png"
-                    : "/public/img/eccentric18logo-black.png"
-                }
+                    ? localStorage.setItem("theme", "light")
+                    : localStorage.setItem("theme", "dark");
+                  setDarkMode(!darkMode);
+                }}
+              />
+
+              {/* sun icon */}
+              <svg
+                className="swap-off fill-current w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24">
+                <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+              </svg>
+
+              {/* moon icon */}
+              <svg
+                className="swap-on fill-current w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24">
+                <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+              </svg>
+            </label>
+          </li>
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <details>
+              <summary>Members ({isLoading ? "" : data.length})</summary>
+              <ul className="p-2 text-base-content bg-base-100">
+                <li>
+                  <NavLink to="/members">All</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/findByBlood">By Blood</NavLink>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <NavLink to="/resources">Resources</NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
+        </ul>
+      </div>
+      {/* Navbar End */}
+      <div className="navbar-end">
+        {authLoading ? (
+          <div className="w-16 h-16 rounded-full skeleton shrink-0"></div>
+        ) : user ? (
+          // User Photo and Menu
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="w-12 h-12 rounded-full m-1">
+              <img
+                src={student?.photoURL}
                 alt=""
-                className="w-16"
+                className="w-12 h-12 object-cover rounded-full"
               />
             </div>
-            {/*      <!-- Mobile trigger --> */}
-            <button
-              className={`relative order-10 block h-10 w-10 self-center lg:hidden
-                ${
-                  isToggleOpen
-                    ? "visible opacity-100 [&_span:nth-child(1)]:w-6 [&_span:nth-child(1)]:translate-y-0 [&_span:nth-child(1)]:rotate-45 [&_span:nth-child(3)]:w-0 [&_span:nth-child(2)]:-rotate-45 "
-                    : ""
-                }
-              `}
-              onClick={() => setIsToggleOpen(!isToggleOpen)}
-              aria-expanded={isToggleOpen ? "true" : "false"}
-              aria-label="Toggle navigation">
-              <div className="absolute top-1/2 left-1/2 w-6 -translate-x-1/2 -translate-y-1/2 transform">
-                <span
-                  aria-hidden="true"
-                  className="absolute block h-0.5 w-9/12 -translate-y-2 transform rounded-full bg-slate-900 dark:bg-white/70 transition-all duration-300"></span>
-                <span
-                  aria-hidden="true"
-                  className="absolute block h-0.5 w-6 transform rounded-full bg-slate-900 dark:bg-white/70 transition duration-300"></span>
-                <span
-                  aria-hidden="true"
-                  className="absolute block h-0.5 w-1/2 origin-top-left translate-y-2 transform rounded-full bg-slate-900 dark:bg-white/70 transition-all duration-300"></span>
-              </div>
-            </button>
-            {/*      <!-- Navigation links --> */}
+            {/* User Menu Dropdown content */}
             <ul
-              role="menubar"
-              aria-label="Select page"
-              className={`absolute top-0 left-0 z-[-1] h-[28.5rem] w-full justify-center overflow-hidden  overflow-y-auto overscroll-contain bg-white/90 dark:bg-slate-900/80 lg:dark:bg-transparent px-8 pb-12 pt-24 font-medium transition-[opacity,visibility] duration-300 lg:visible lg:relative lg:top-0  lg:z-0 lg:flex lg:h-full lg:w-auto lg:items-stretch lg:overflow-visible lg:bg-white/0 lg:px-0 lg:py-0  lg:pt-0 lg:opacity-100 ${
-                isToggleOpen
-                  ? "visible opacity-100 backdrop-blur-md"
-                  : "invisible opacity-0"
-              }`}>
-              {NavbarItems.map((item) => {
-                return (
-                  <li
-                    role="none"
-                    className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-zinc-600 dark:hover:text-white  lg:px-8"
-                    key={item.name}>
-                    <NavLink
-                      onClick={() => {
-                        setPathname(item.link);
-                        if (isToggleOpen) {
-                          setIsToggleOpen(false);
-                        }
-                      }}
-                      className={pathname == item.link && "text-sky-600 "}
-                      to={item.link}>
-                      {item.name}
-                    </NavLink>
-                  </li>
-                );
-              })}
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 space-y-1">
+              <li
+                className={`text-black text-center my-2 text-lg font-semibold
+                  ${darkMode ? "text-white" : "text-black"}`}>
+                {student?.name}
+              </li>
+              <li>
+                {/* Showing Admin Panel if User is an admin */}
+                {student?.isAdmin && (
+                  <NavLink to="admin" className="btn btn-secondary text-white">
+                    Admin Panel
+                  </NavLink>
+                )}
+              </li>
+              <li>
+                <NavLink
+                  to="/editProfile"
+                  className="btn btn-secondary text-white">
+                  Edit Profile
+                </NavLink>
+              </li>
+
+              <li>
+                <button
+                  className="btn btn-secondary text-white "
+                  onClick={signOutHandler}>
+                  Sign Out
+                </button>
+              </li>
             </ul>
-            {/*      <!-- Actions --> */}
-            <div className="ml-auto flex items-center space-x-3 justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
-              {/* <UserDropdown></UserDropdown> */}
-              <UserModal></UserModal>
-              <span
-                className="w-8 h-8 flex items-center justify-center bg-slate-900/10 dark:bg-white/10 rounded-full text-xl"
-                onClick={() => {
-                  setDarkMode(!darkMode);
-                  document.querySelector("html").classList.toggle("dark");
-                }}>
-                {darkMode && (
-                  <motion.div
-                    initial={{ rotate: 0, opacity: 0 }}
-                    animate={{ rotate: 360, opacity: 1 }}
-                    transition={{ duration: 0.8 }}>
-                    <FaMoon></FaMoon>
-                  </motion.div>
-                )}
-                {darkMode || (
-                  <motion.div
-                    initial={{ rotate: 0, opacity: 0 }}
-                    animate={{ rotate: 360, opacity: 1 }}
-                    transition={{ duration: 0.7 }}>
-                    <FaSun className="text-yellow-500"></FaSun>
-                  </motion.div>
-                )}
-              </span>
-            </div>
-          </nav>
-        </div>
-      </header>
-      {/*<!-- End Navbar with Topbar--> */}
+          </div>
+        ) : (
+          <NavLink
+            to="/signIn"
+            className="btn btn-secondary text-white shadow-lg shadow-secondary/50 border-none">
+            Sign In
+          </NavLink>
+        )}
+      </div>
     </div>
   );
-}
+};
+
+export default Navbar;
