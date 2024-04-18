@@ -8,19 +8,8 @@ const MemberCard = ({ student }) => {
   const { std_id, name, photoURL, bio, facebook } = student;
   const { isLoading } = useStudents();
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 75,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.3,
-        ease: "linear",
-      }}
+    <div
+      data-aos="zoom-in"
       className="card w-72 md:w-72 min-h-[500px] bg-base-100 shadow-md">
       <figure>
         <img
@@ -33,7 +22,9 @@ const MemberCard = ({ student }) => {
         />
       </figure>
       <div className="card-body flex flex-col items-center justify-start">
-        <h2 className="card-title text-primary text-center">{name}</h2>
+        <h2 className="card-title text-primary text-center font-bold ">
+          {name}
+        </h2>
         <p className="text-base-content text-sm font-semibold text-center">
           {bio}
         </p>
@@ -48,7 +39,7 @@ const MemberCard = ({ student }) => {
           </Link>
           <a
             href={facebook}
-            className="btn bg-secondary hover:bg-primary/70 text-white border-none shadow-lg shadow-secondary/50">
+            className="btn bg-secondary hover:bg-secondary/70 text-white border-none shadow-lg shadow-secondary/50">
             Connect
           </a>
           {userStudent?.isAdmin && (
@@ -60,7 +51,7 @@ const MemberCard = ({ student }) => {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

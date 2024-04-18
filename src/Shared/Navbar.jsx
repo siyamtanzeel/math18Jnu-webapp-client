@@ -1,4 +1,8 @@
 import React, { useContext, useState } from "react";
+import { FaHome } from "react-icons/fa";
+import { IoIosPeople } from "react-icons/io";
+import { RiDashboardFill } from "react-icons/ri";
+
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import { auth } from "../Firebase/firebase.config";
@@ -6,6 +10,8 @@ import { signOut } from "firebase/auth";
 import useStudents from "../hooks/useStudents";
 import "./Navbar.css";
 import { DarkModeContext } from "../Providers/DarkModeProvider";
+import Swal from "sweetalert2";
+import { GrResources } from "react-icons/gr";
 
 const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
@@ -19,6 +25,10 @@ const Navbar = () => {
       setAuthLoading(false);
       setStudent(null);
       setUser(null);
+      Swal.fire({
+        title: "Successfuly Logged Out",
+        icon: "success",
+      });
     });
   };
   return (
@@ -57,15 +67,18 @@ const Navbar = () => {
               className="drawer-overlay"></label>
             <ul
               tabIndex={0}
-              className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+              className="menu p-4 w-64 min-h-full bg-base-200 text-base-content">
               <li>
                 <NavLink className="navlink" to="/">
-                  Home
+                  <FaHome className="mr-1 text-lg"></FaHome> Home
                 </NavLink>
               </li>
 
               <li className="">
-                <a>Members</a>
+                <a>
+                  <IoIosPeople className="mr-1 text-lg"></IoIosPeople> Members (
+                  {isLoading ? "" : data.length})
+                </a>
                 <ul className="p-2">
                   <li>
                     <NavLink to="/members">All</NavLink>
@@ -76,10 +89,17 @@ const Navbar = () => {
                 </ul>
               </li>
               <li>
-                <NavLink to="/resources">Resources</NavLink>
+                <NavLink to="/resources">
+                  {" "}
+                  <GrResources className="mr-2 text-lg"></GrResources>Resources
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard">Dashboard</NavLink>
+                <NavLink to="/dashboard">
+                  {" "}
+                  <RiDashboardFill />
+                  Dashboard
+                </NavLink>
               </li>
               {/* Dark Mode Controller */}
               <li className=" mt-10">
@@ -169,14 +189,22 @@ const Navbar = () => {
             </label>
           </li>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink className="navlink" to="/">
+              <FaHome className="mr-1 text-lg"></FaHome> Home
+            </NavLink>
           </li>
           <li>
             <details>
-              <summary>Members ({isLoading ? "" : data.length})</summary>
+              <summary>
+                <IoIosPeople className="mr-1 text-lg"></IoIosPeople> Members (
+                {isLoading ? "" : data.length})
+              </summary>
               <ul className="p-2 text-base-content bg-base-100">
                 <li>
                   <NavLink to="/members">All</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/committee">Committee</NavLink>
                 </li>
                 <li>
                   <NavLink to="/findByBlood">By Blood</NavLink>
@@ -185,10 +213,15 @@ const Navbar = () => {
             </details>
           </li>
           <li>
-            <NavLink to="/resources">Resources</NavLink>
+            <NavLink to="/resources">
+              <GrResources className="mr-2 text-lg"></GrResources>Resources
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/dashboard">
+              <RiDashboardFill />
+              Dashboard
+            </NavLink>
           </li>
         </ul>
       </div>
@@ -196,7 +229,7 @@ const Navbar = () => {
       <div className="navbar-end">
         {authLoading ? (
           <div className="w-16 h-16 rounded-full skeleton shrink-0"></div>
-        ) : user ? (
+        ) : student ? (
           // User Photo and Menu
           <div className="dropdown dropdown-end">
             <div
@@ -221,7 +254,7 @@ const Navbar = () => {
               <li>
                 {/* Showing Admin Panel if User is an admin */}
                 {student?.isAdmin && (
-                  <NavLink to="admin" className="btn btn-secondary text-white">
+                  <NavLink to="admin" className="btn btn-primary text-white">
                     Admin Panel
                   </NavLink>
                 )}
@@ -229,7 +262,7 @@ const Navbar = () => {
               <li>
                 <NavLink
                   to="/editProfile"
-                  className="btn btn-secondary text-white">
+                  className="btn btn-primary text-white">
                   Edit Profile
                 </NavLink>
               </li>

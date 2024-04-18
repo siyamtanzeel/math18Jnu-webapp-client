@@ -1,13 +1,27 @@
 import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { FcPhone, FcHome } from "react-icons/fc";
-import { FaDroplet, FaScrewdriverWrench } from "react-icons/fa6";
+import { FaDroplet, FaSchool, FaScrewdriverWrench } from "react-icons/fa6";
 import { TbBus } from "react-icons/tb";
 import { GiVillage } from "react-icons/gi";
-import { IoSchool } from "react-icons/io5";
+import { IoHome, IoSchool } from "react-icons/io5";
+
+// import styles
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+import lgZoom from "lightgallery/plugins/zoom";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import LightGallery from "lightgallery/react";
+import { FaHome, FaPhone } from "react-icons/fa";
 
 const UserPage = () => {
   const userData = useLoaderData();
+  const onInit = () => {
+    console.log("light gallery initialized");
+  };
   const {
     photoURL,
     name,
@@ -16,7 +30,6 @@ const UserPage = () => {
     college,
     phone,
     std_id,
-    telegram,
     facebook,
     skills,
     blood_group,
@@ -28,28 +41,23 @@ const UserPage = () => {
 
   return (
     <div className="px-3 py-5 bg-base-300/50 flex flex-col items-center justify-center ">
-      {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
-      <div className="modal absolute" role="dialog">
-        <div className="modal-box w-76 flex items-center justify-center absolute top-20 lg:left-auto">
-          <img src={photoURL} alt="" className="w-72 h-full object-contain" />
-        </div>
-        <label className="modal-backdrop" htmlFor="my_modal_7">
-          Close
-        </label>
-      </div>
       <div className="flex flex-col items-center justify-center space-y-3">
-        {/* The button to open modal */}
-        <label htmlFor="my_modal_7" className="">
-          <img
-            src={photoURL}
-            alt=""
-            className="w-64 h-64 rounded-full object-cover"
-          />
-        </label>
-
+        <LightGallery
+          onInit={onInit}
+          speed={500}
+          elementClassNames="flex items-center justify-center"
+          plugins={[lgThumbnail, lgZoom]}>
+          <a href={photoURL || "/public/img/userIcon.png"} data-aos="zoom-in">
+            <img
+              src={photoURL || "/public/img/userIcon.png"}
+              alt={name}
+              className="w-64 h-64 rounded-full object-cover"
+            />
+          </a>
+        </LightGallery>
         <h1 className="text-primary text-2xl font-semibold">{name}</h1>
         <p className="text-base-content font-bold">{bio}</p>
+        <p className="text-secondary font-bold">{userData?.role}</p>
         <div className="flex items-center justify-center space-x-2">
           <a
             href={facebook}
@@ -69,14 +77,14 @@ const UserPage = () => {
             Information
           </h3>
           <div className="divider"></div>
-          <table className="table table-zebra md:text-lg">
+          <table className="table  font-semibold">
             {/* head */}
 
             <tbody>
               {/* row 1 */}
               <tr className="shadow-md">
                 <td className="text-primary font-bold flex items-center">
-                  <IoSchool className="text-black mr-2"></IoSchool> College
+                  <FaSchool className="mr-2"></FaSchool> College
                 </td>
                 <td>{college}</td>
               </tr>
@@ -84,7 +92,7 @@ const UserPage = () => {
               <tr className="shadow-md">
                 <td className="text-primary font-bold flex items-center">
                   {" "}
-                  <FcHome className="mr-2"></FcHome> Present Address
+                  <FaHome className="mr-2"></FaHome> Present Address
                 </td>
                 <td>{present_address}</td>
               </tr>
@@ -92,7 +100,7 @@ const UserPage = () => {
               <tr className="shadow-md">
                 <td className="text-primary font-bold flex items-center">
                   {" "}
-                  <GiVillage className="text-teal-600 mr-2"></GiVillage>
+                  <GiVillage className=" mr-2"></GiVillage>
                   Home District
                 </td>
                 <td>{home_district}</td>
@@ -108,7 +116,7 @@ const UserPage = () => {
               <tr className="shadow-md">
                 <td className="text-primary font-bold flex items-center">
                   {" "}
-                  <FaScrewdriverWrench className="text-gray-900 mr-2"></FaScrewdriverWrench>
+                  <FaScrewdriverWrench className=" mr-2"></FaScrewdriverWrench>
                   Skills
                 </td>
                 <td>{skills}</td>
@@ -116,14 +124,14 @@ const UserPage = () => {
               <tr className="shadow-md">
                 <td className="text-primary font-bold flex items-center">
                   {" "}
-                  <TbBus className="text-red-700 mr-2"></TbBus>
+                  <TbBus className=" mr-2"></TbBus>
                   Varsity Bus
                 </td>
                 <td className="">{varsity_bus}</td>
               </tr>
               <tr className="shadow-md">
                 <td className="text-primary font-bold flex items-center">
-                  <FcPhone className="mr-2"></FcPhone> Phone
+                  <FaPhone className="mr-2"></FaPhone> Phone
                 </td>
                 <td className="">{phone || "Not Available"}</td>
               </tr>

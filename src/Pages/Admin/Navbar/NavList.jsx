@@ -1,16 +1,47 @@
 import React, { useContext } from "react";
 import { DarkModeContext } from "../../../Providers/DarkModeProvider";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { GrGallery, GrResources } from "react-icons/gr";
+import { FaBell, FaUsersGear, FaYoutube } from "react-icons/fa6";
+import { GiTeacher } from "react-icons/gi";
+import { IoDocument, IoDocuments } from "react-icons/io5";
+import { ImBooks } from "react-icons/im";
 
 const NavList = () => {
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
   return (
-    <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content justify-center">
+    <ul className="menu p-4 w-64 lg:w-full min-h-full bg-base-200 text-base-content justify-center">
       {/* Sidebar content here */}
-      <li>
-        <a>Sidebar Item 1</a>
+
+      <li className=" space-y-1 w-full">
+        <NavLink className="" to="/admin/resources">
+          <GrResources className="mr-2 text-lg"></GrResources> Resources
+        </NavLink>
+        <NavLink className="" to="/admin/users">
+          <FaUsersGear className="mr-2 text-lg"></FaUsersGear>Users
+        </NavLink>
+        <NavLink className="" to="/">
+          <FaBell className="mr-2 text-lg"></FaBell> Notices
+        </NavLink>
+        <NavLink className="" to="/">
+          <GiTeacher className="mr-2 text-lg"></GiTeacher>Teachers
+        </NavLink>
+        <NavLink className="" to="/">
+          <GrGallery className="mr-2 text-lg"></GrGallery> Gallery
+        </NavLink>
+        <NavLink className="" to="/">
+          <FaYoutube className="mr-2 text-lg"></FaYoutube>Video Tutorials
+        </NavLink>
+        <NavLink className="" to="/">
+          <IoDocuments className="mr-2 text-lg"></IoDocuments> Previous Year
+          Questions
+        </NavLink>
+        <NavLink className="" to="/">
+          <ImBooks className="mr-2 text-lg"></ImBooks> Booklist
+        </NavLink>
       </li>
-      <li className=" mt-10">
+
+      <li className="mt-10">
         <Link to="/" className="btn btn-success text-white">
           Back to Home
         </Link>

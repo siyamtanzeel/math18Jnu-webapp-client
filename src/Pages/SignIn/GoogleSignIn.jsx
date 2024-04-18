@@ -20,7 +20,7 @@ const GoogleSignIn = () => {
     signInWithPopup(auth, GoogleProvider)
       .then((res) => {
         axiosSecure
-          .get(`/userAuth/${res.user.email}`)
+          .post(`/userAuth`, { email: res.user.email })
           .then((result) => {
             if (result.data.email) {
               console.log(res.user, result.data);
@@ -33,22 +33,27 @@ const GoogleSignIn = () => {
               setStudent(result.data);
               setAuthLoading(false);
             } else {
-              Swal.fire({
-                title: "Sorry, Couldn't Log In!",
-                text: "You are not a member of Eccentric-18",
-                icon: "error",
-              });
               setUser(null);
-              signOut(auth)
-                .then((res) => {
-                  navigate("/");
-                })
-                .then();
+              signOut(auth).then((res) => {
+                setAuthLoading(false);
+                Swal.fire({
+                  title: "Sorry, Couldn't Log In!",
+                  text: "You are not a member of Eccentric-18",
+                  icon: "error",
+                });
+                navigate("/");
+              });
             }
           })
-          .catch((err) => console.log(err.message));
+          .catch((err) => {
+            setAuthLoading(false);
+            console.log(err.message);
+          });
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        console.log(err.message);
+        setAuthLoading(false);
+      });
   };
   return (
     <button

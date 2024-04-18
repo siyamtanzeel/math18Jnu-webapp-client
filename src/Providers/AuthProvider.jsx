@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.config";
@@ -32,7 +33,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        fetch(`http://localhost:5000/userAuth/${user.email}`)
+        fetch(`http://localhost:5000/userAuth`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ email: user.email }),
+        })
           .then((res) => res.json())
           .then((result) => {
             console.log(user, result);
@@ -51,16 +58,19 @@ const AuthProvider = ({ children }) => {
       }
     });
   }, []);
-  const passwordAuthentication = (email, password) => {
+  const CreateNewUser = (email, password) => {
     setAuthLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+  const SignIn = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
   };
   const exports = {
     user,
     setUser,
     student,
     setStudent,
-    passwordAuthentication,
+    SignIn,
     authLoading,
     setAuthLoading,
   };

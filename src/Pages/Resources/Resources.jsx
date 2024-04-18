@@ -1,35 +1,42 @@
-import React from "react";
+import { useState } from "react";
 import Title from "../../Components/Title";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+
 import { Helmet } from "react-helmet-async";
+import Links from "./Links";
+import Videos from "./Videos";
 
 const Resources = () => {
-  const axiosSecure = useAxiosSecure();
-  const { data, isLoading } = useQuery({
-    queryKey: ["resources"],
-    queryFn: async () => {
-      const result = await axiosSecure.get("/resources");
-      return result.data;
-    },
-  });
+  const [tabIdx, setTabIdx] = useState(1);
   return (
-    <div className="flex flex-col items-center space-y-7 justify-center py-20 min-h-screen">
+    <div className="flex flex-col items-center space-y-7 justify-center py-5">
       <Helmet>
         <title>Resources - Eccentric-18</title>
       </Helmet>
       <Title>Resources</Title>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-5">
-        {isLoading
-          ? "loading"
-          : data.map((link) => (
-              <a
-                key={link._id}
-                className="btn btn-primary text-white w-full text-lg font-normal shadow-lg shadow-primary/50"
-                href={link.link}>
-                {link.title}
-              </a>
-            ))}
+      <div role="tablist" className="tabs tabs-boxed max-w-60 mx-auto mt-12">
+        <a
+          role="tab"
+          className={`tab ${tabIdx == 1 && "tab-active"}`}
+          onClick={() => setTabIdx(1)}>
+          Videos
+        </a>
+        <a
+          role="tab"
+          className={`tab ${tabIdx == 2 && "tab-active"}`}
+          onClick={() => setTabIdx(2)}>
+          Links
+        </a>
+        <a
+          role="tab"
+          className={`tab ${tabIdx == 3 && "tab-active"}`}
+          onClick={() => setTabIdx(3)}>
+          Docs
+        </a>
+      </div>
+
+      <div className="">
+        {tabIdx == 2 && <Links></Links>}
+        {tabIdx == 1 && <Videos></Videos>}
       </div>
     </div>
   );

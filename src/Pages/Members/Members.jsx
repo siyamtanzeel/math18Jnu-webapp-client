@@ -33,29 +33,29 @@ const Members = () => {
         </div>
       )} */}
       <div className="text-base-content font-semibold text-xl">
-        Page - {pageIdx}
-      </div>
-      <div className="space-x-2 my-5">
-        <button
-          className="btn btn-neutral text-white"
-          disabled={!isLoading && startIdx - 6 < 0 && true}
-          onClick={() => {
-            setPageIdx(pageIdx - 1);
-            setStartIdx(startIdx - 6);
-            setEndIdx(endIdx - 6);
-          }}>
-          Previous Page
-        </button>
-        <button
-          className="btn btn-neutral text-white"
-          disabled={!isLoading && startIdx + 6 > data.length - 1 && true}
-          onClick={() => {
-            setPageIdx(pageIdx + 1);
-            setStartIdx(startIdx + 6);
-            setEndIdx(endIdx + 6);
-          }}>
-          Next Page
-        </button>
+        <div className="join">
+          <button
+            className="join-item btn text-2xl"
+            disabled={!isLoading && startIdx - 6 < 0 && true}
+            onClick={() => {
+              setPageIdx(pageIdx - 1);
+              setStartIdx(startIdx - 6);
+              setEndIdx(endIdx - 6);
+            }}>
+            «
+          </button>
+          <button className="join-item btn">Page {pageIdx}</button>
+          <button
+            className="join-item btn text-2xl"
+            disabled={!isLoading && startIdx + 6 > data.length - 1 && true}
+            onClick={() => {
+              setPageIdx(pageIdx + 1);
+              setStartIdx(startIdx + 6);
+              setEndIdx(endIdx + 6);
+            }}>
+            »
+          </button>
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 items-center justify-center">
         {isLoading &&
@@ -69,11 +69,27 @@ const Members = () => {
               <div className="skeleton h-10 w-full"></div>
             </div>
           ))}
-        {data?.slice(startIdx, endIdx).map((student) => {
-          return (
-            <MemberCard key={student.std_id} student={student}></MemberCard>
-          );
-        })}
+        {data
+          ?.sort((a, b) => {
+            // Extracting student IDs from each object
+            const idA = a.std_id;
+            const idB = b.std_id;
+
+            // Comparing student IDs and returning the comparison result
+            if (idA < idB) {
+              return -1; // ID A comes before ID B
+            }
+            if (idA > idB) {
+              return 1; // ID B comes before ID A
+            }
+            return 0; // IDs are equal
+          })
+          .slice(startIdx, endIdx)
+          .map((student) => {
+            return (
+              <MemberCard key={student.std_id} student={student}></MemberCard>
+            );
+          })}
       </div>
     </div>
   );
