@@ -7,7 +7,7 @@ const Footer = () => {
       data-theme="dark">
       <aside>
         <p className="text-white">
-          Copyright © 2024 - All right reserved by <br className="md:hidden" />
+          Copyright © 2024 - All rights reserved by <br className="md:hidden" />
           <a
             href="https://www.facebook.com/siyamtanzeel"
             className="text-primary font-bold text-lg">

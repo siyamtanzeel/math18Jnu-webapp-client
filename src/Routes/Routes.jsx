@@ -20,6 +20,7 @@ import ResourcesAdmin from "../Pages/Admin/ResourcesAdmin/ResourcesAdmin";
 import Committee from "../Pages/Committee/Committee";
 import Videos from "../Pages/Resources/Videos.jsx";
 import Links from "../Pages/Resources/Links.jsx";
+import VideoEditPage from "../Pages/Admin/ResourcesAdmin/VideoEditPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +107,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <ResourcesAdmin></ResourcesAdmin>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "/admin/video/:id",
+        element: (
+          <AdminRoutes>
+            <VideoEditPage></VideoEditPage>
           </AdminRoutes>
         ),
       },

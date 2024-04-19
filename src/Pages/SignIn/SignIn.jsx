@@ -52,6 +52,10 @@ const Login = () => {
               setAuthLoading(false);
               signOut(auth).then();
             } else {
+              axiosSecure
+                .post("/jwt", result.data)
+                .then((res) => console.log(res.data))
+                .catch((err) => console.log(err.message));
               setUser(res.user);
               setStudent(result.data);
               setAuthLoading(false);

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FaTrash } from "react-icons/fa";
 import AdminTitle from "../../../Components/AdminTitle";
 import { Helmet } from "react-helmet-async";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const { student } = useContext(AuthContext);
   const {
     data: allStudents,
     isLoading: allLoading,
@@ -15,7 +17,9 @@ const AllUsers = () => {
   } = useQuery({
     queryKey: ["allStudentsAdmin"],
     queryFn: async (res) => {
-      const result = await axiosSecure.get("/admin/allStudents");
+      const result = await axiosSecure.get(
+        `/admin/allStudents?email=${student.email}`
+      );
       return result.data;
     },
   });
@@ -104,7 +108,9 @@ const AllUsers = () => {
                   <td className="hidden md:flex">{phone}</td>
                   <th>
                     <button
-                      className="btn btn-secondary btn-xs md:btn-md text-white md:text-xl shadow-lg shadow-secondary/50"
+                      className={`btn btn-secondary btn-xs md:btn-md text-white md:text-xl ${
+                        isAdmin || " shadow-lg shadow-secondary/50"
+                      }`}
                       onClick={() => handleDelete(_id)}
                       disabled={isAdmin}>
                       <FaTrash />

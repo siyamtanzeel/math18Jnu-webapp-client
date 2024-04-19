@@ -23,7 +23,10 @@ const GoogleSignIn = () => {
           .post(`/userAuth`, { email: res.user.email })
           .then((result) => {
             if (result.data.email) {
-              console.log(res.user, result.data);
+              axiosSecure
+                .post("/jwt", result.data)
+                .then((res) => console.log(res.data))
+                .catch((err) => console.log(err.message));
               Swal.fire({
                 title: "Log In Successful",
                 text: `Welcome ${result.data.name}!`,
@@ -46,11 +49,22 @@ const GoogleSignIn = () => {
             }
           })
           .catch((err) => {
+            Swal.fire({
+              title: "Sorry, Couldn't Log In!",
+              text: "An Error Occured",
+              icon: "error",
+            });
+            navigate("/");
             setAuthLoading(false);
             console.log(err.message);
           });
       })
       .catch((err) => {
+        Swal.fire({
+          title: "Sorry, Couldn't Log In!",
+          text: "An Error Occured",
+          icon: "error",
+        });
         console.log(err.message);
         setAuthLoading(false);
       });

@@ -4,6 +4,7 @@ import Banner from "./Banner/Banner";
 import Gallery from "../Gallery/Gallery";
 import AboutUs from "./AboutUs/AboutUs";
 import { Helmet } from "react-helmet-async";
+import Announcements from "./Announcements/Announcements";
 
 const Home = () => {
   return (
@@ -15,8 +16,9 @@ const Home = () => {
         <HomeCarousel></HomeCarousel>
         <Banner></Banner>
       </div>
-      <Gallery></Gallery>
+      {/* <Announcements></Announcements> */}
       <AboutUs></AboutUs>
+      <Gallery></Gallery>
     </div>
   );
 };

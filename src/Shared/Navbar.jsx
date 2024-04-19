@@ -12,16 +12,19 @@ import "./Navbar.css";
 import { DarkModeContext } from "../Providers/DarkModeProvider";
 import Swal from "sweetalert2";
 import { GrResources } from "react-icons/gr";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
   console.log(darkMode);
+  const axiosSecure = useAxiosSecure();
   const { user, setUser, student, authLoading, setAuthLoading, setStudent } =
     useContext(AuthContext);
   const { data, isLoading } = useStudents();
   const signOutHandler = () => {
     setAuthLoading(true);
     signOut(auth).then(() => {
+      axiosSecure.post("/logout", {}).then((res) => console.log(res.data));
       setAuthLoading(false);
       setStudent(null);
       setUser(null);
