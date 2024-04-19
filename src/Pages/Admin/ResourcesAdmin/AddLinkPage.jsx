@@ -6,60 +6,53 @@ import AdminTitle from "../../../Components/AdminTitle";
 import Swal from "sweetalert2";
 import { FaChevronLeft } from "react-icons/fa";
 
-const VideoEditPage = () => {
+const AddLinkPage = () => {
   const id = useParams().id;
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["videoData"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/admin/video/${id}`);
-      return res.data;
-    },
-  });
-  const updateHandler = (e) => {
+  const addHandler = (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
-    const privacy = form.privacy.value;
-    const term = form.term.value;
-    const videoURLs = form.videoURLs.value.split(",");
-    const updatedVideo = {
+    const link = form.link.value;
+    const access = form.access.value;
+    const iat = new Date();
+
+    const newLink = {
       title: title,
-      privacy: privacy,
-      term: term,
-      videoURLs: videoURLs,
+      access: access,
+      link: link,
+      iat: iat,
     };
     Swal.fire({
       title: "Are you sure?",
-      text: "This will update the video",
+      text: "This will add the link to resources",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#e11d48",
       cancelButtonColor: "#0ea5e9",
-      confirmButtonText: "Yes, Update it!",
+      confirmButtonText: "Yes, Add it!",
     }).then((result) => {
       if (result.isConfirmed) {
         setLoading(true);
         axiosSecure
-          .put(`/admin/updateVideo/${id}`, updatedVideo)
+          .post(`/admin/addLink`, newLink)
           .then((res) => {
-            if (res.data.modifiedCount > 0) {
+            if (res.data.acknowledged) {
               setLoading(false);
               Swal.fire({
                 title: "Successful!",
-                text: "Your video has been Updated!",
+                text: "Your link has been Added!",
                 icon: "success",
               });
-              refetch();
 
               navigate("/admin/resources");
             } else {
               setLoading(false);
               Swal.fire({
                 title: "Failed!",
-                text: "Couldn't Update the video",
+                text: "Couldn't add the link",
                 icon: "error",
               });
             }
@@ -69,7 +62,7 @@ const VideoEditPage = () => {
             console.log(err.message);
             Swal.fire({
               title: "Failed!",
-              text: "Couldn't Update the video",
+              text: "Couldn't add the link",
               icon: "error",
             });
           });
@@ -78,15 +71,7 @@ const VideoEditPage = () => {
   };
   return (
     <div className="flex flex-col items-center justify-center py-5 space-y-5">
-      {(isLoading || loading) && (
-        <div className="absolute top-0 left-0 z-30 w-full h-full bg-primary/30 backdrop-blur-lg flex flex-col items-center justify-center space-y-3">
-          <progress className="progress w-56"></progress>
-          <p className="text-base-content font-bold text-2xl">Processing</p>
-        </div>
-      )}
-      <AdminTitle>Edit Video</AdminTitle>
-      <p className="font-bold text-xl text-center">{data?.title}</p>
-      {isLoading && "loading"}
+      <AdminTitle>Add a Link</AdminTitle>
       <div className="w-full flex items-center justify-between px-3">
         <Link
           className="rounded-full p-2 border border-base-content/60"
@@ -94,79 +79,53 @@ const VideoEditPage = () => {
           <FaChevronLeft></FaChevronLeft>
         </Link>
       </div>
-      <form className="card-body w-full" onSubmit={updateHandler}>
+      <form className="card-body w-full" onSubmit={addHandler}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-4">
           {/* Title */}
           <div className="form-control md:col-span-2">
             <label className="label">
               <span className="text-lg label-text text-success">
-                Video Title
+                Link Title
               </span>
             </label>
             <input
               type="text"
-              defaultValue={data?.title}
               name="title"
-              placeholder="Video Title"
+              placeholder="Link Title"
               className="input input-bordered input-success"
               required
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="text-lg label-text text-success">Term</span>
+              <span className="text-lg label-text text-success">Link URL</span>
             </label>
-            <select
-              className="select select-success w-full max-w-xs"
-              name="term"
-              defaultValue={data?.term}>
-              <option>1-2</option>
-              <option>2-1</option>
-              <option>2-2</option>
-              <option>3-1</option>
-              <option>3-2</option>
-              <option>4-1</option>
-              <option>4-2</option>
-            </select>
+            <input
+              type="text"
+              name="link"
+              placeholder="Link URL"
+              className="input input-bordered input-success"
+              required
+            />
           </div>
           <div className="form-control">
             <label className="label">
               <span className="text-lg label-text text-success">
-                Video Privacy
+                Link Privacy
               </span>
             </label>
             <select
-              defaultValue={data?.privacy}
-              name="privacy"
+              name="access"
               className="select select-success w-full max-w-xs">
               <option>public</option>
               <option>private</option>
             </select>
           </div>
-          <div className="form-control md:col-span-2">
-            <label className="label">
-              <span
-                className="text-lg label-text text-success"
-                style={{ fontFamily: "sans-serif" }}>
-                VideoURLs{" "}
-                <span className="text-base-content">
-                  (seperate using commas. Don't use spaces)
-                </span>
-              </span>
-            </label>
-
-            <textarea
-              placeholder="Video URLs"
-              name="videoURLs"
-              defaultValue={data?.videoURLs.join(",")}
-              className="textarea textarea-success min-h-24"
-              required></textarea>
-          </div>
         </div>
 
         <div className="form-control mt-6">
           <button className="btn btn-success text-white mb-3 " type="submit">
-            Update
+            Add
           </button>
         </div>
       </form>
@@ -174,4 +133,4 @@ const VideoEditPage = () => {
   );
 };
 
-export default VideoEditPage;
+export default AddLinkPage;

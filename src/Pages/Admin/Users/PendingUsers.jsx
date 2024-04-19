@@ -61,7 +61,7 @@ const PendingUsers = () => {
     });
   };
   return (
-    <div className="text-center py-5 px-3 flex flex-col items-center justify-center space-y-5">
+    <div className="text-center py-5 px-3 flex flex-col items-center justify-center space-y-5 ">
       <AdminTitle>Pending Users</AdminTitle>
       {isLoading && (
         <div className="absolute top-0 left-0 z-30 w-full h-full bg-primary/30 backdrop-blur-lg flex items-center justify-center">

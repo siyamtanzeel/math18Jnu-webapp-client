@@ -30,13 +30,6 @@ const NavList = () => {
           <GrGallery className="mr-2 text-lg"></GrGallery> Gallery
         </NavLink>
         <NavLink className="" to="/">
-          <FaYoutube className="mr-2 text-lg"></FaYoutube>Video Tutorials
-        </NavLink>
-        <NavLink className="" to="/">
-          <IoDocuments className="mr-2 text-lg"></IoDocuments> Previous Year
-          Questions
-        </NavLink>
-        <NavLink className="" to="/">
           <ImBooks className="mr-2 text-lg"></ImBooks> Booklist
         </NavLink>
       </li>

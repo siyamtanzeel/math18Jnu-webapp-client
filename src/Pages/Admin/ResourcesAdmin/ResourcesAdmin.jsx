@@ -4,6 +4,7 @@ import AdminTitle from "../../../Components/AdminTitle";
 import LinksAdmin from "./LinksAdmin";
 import VideosAdmin from "./VideosAdmin";
 import DocsAdmin from "./DocsAdmin";
+import { FaFileAlt, FaLink, FaYoutube } from "react-icons/fa";
 
 const ResourcesAdmin = () => {
   const [tabIdx, setTabIdx] = useState(1);
@@ -17,7 +18,7 @@ const ResourcesAdmin = () => {
           <title>Resources - Eccentric-18</title>
         </Helmet>
         <AdminTitle>Resources</AdminTitle>
-        <div role="tablist" className="tabs tabs-boxed max-w-60 mx-auto mt-12">
+        <div role="tablist" className="tabs tabs-boxed max-w-72 mx-auto mt-12">
           <a
             role="tab"
             className={`tab ${
@@ -25,7 +26,7 @@ const ResourcesAdmin = () => {
               "bg-neutral text-white transition-colors duration-300"
             }`}
             onClick={() => setTabIdx(1)}>
-            Videos
+            <FaYoutube className="mr-1"></FaYoutube>Videos
           </a>
           <a
             role="tab"
@@ -34,7 +35,7 @@ const ResourcesAdmin = () => {
               "bg-neutral text-white transition-colors duration-300"
             }`}
             onClick={() => setTabIdx(2)}>
-            Links
+            <FaLink className="mr-1"></FaLink>Links
           </a>
           <a
             role="tab"
@@ -43,7 +44,7 @@ const ResourcesAdmin = () => {
               "bg-neutral text-white transition-colors duration-300"
             }`}
             onClick={() => setTabIdx(3)}>
-            Docs
+            <FaFileAlt className="mr-1"></FaFileAlt>Docs
           </a>
         </div>
 

@@ -21,6 +21,9 @@ import Committee from "../Pages/Committee/Committee";
 import Videos from "../Pages/Resources/Videos.jsx";
 import Links from "../Pages/Resources/Links.jsx";
 import VideoEditPage from "../Pages/Admin/ResourcesAdmin/VideoEditPage.jsx";
+import AdminTitle from "../Components/AdminTitle.jsx";
+import LinksEditPage from "../Pages/Admin/ResourcesAdmin/LinksEditPage.jsx";
+import AddLinkPage from "../Pages/Admin/ResourcesAdmin/AddLinkPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -95,6 +98,17 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/admin",
+        element: (
+          <AdminRoutes>
+            <div className="h-screen flex flex-col space-y-5 items-center justify-center text-center">
+              <AdminTitle>Welcome to Admin Panel!</AdminTitle>
+              <p>Open any section from the menu to start Administration</p>
+            </div>
+          </AdminRoutes>
+        ),
+      },
+      {
         path: "/admin/users",
         element: (
           <AdminRoutes>
@@ -115,6 +129,22 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <VideoEditPage></VideoEditPage>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "/admin/link/:id",
+        element: (
+          <AdminRoutes>
+            <LinksEditPage></LinksEditPage>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "/admin/addLink",
+        element: (
+          <AdminRoutes>
+            <AddLinkPage></AddLinkPage>
           </AdminRoutes>
         ),
       },

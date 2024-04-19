@@ -64,7 +64,7 @@ const AllUsers = () => {
     });
   };
   return (
-    <div className="text-center py-5 px-3 flex flex-col items-center justify-center space-y-5">
+    <div className="text-center py-5 px-3 flex flex-col items-center justify-center space-y-5 ">
       <AdminTitle>All Users</AdminTitle>
       {allLoading && "Loading"}
       <div className="overflow-x-auto">

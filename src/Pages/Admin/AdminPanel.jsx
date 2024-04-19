@@ -17,7 +17,7 @@ const AdminPanel = () => {
           <NavList></NavList>
         </div>
       </div>
-      <div className="col-span-12 px-3 lg:px-0 lg:col-span-8 pt-16">
+      <div className="col-span-12 px-3 lg:px-0 lg:col-span-8 pt-16 transition duration-300">
         <Outlet></Outlet>
       </div>
     </div>

@@ -6,15 +6,15 @@ import AdminTitle from "../../../Components/AdminTitle";
 import Swal from "sweetalert2";
 import { FaChevronLeft } from "react-icons/fa";
 
-const VideoEditPage = () => {
+const LinksEditPage = () => {
   const id = useParams().id;
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["videoData"],
+    queryKey: ["linkData"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/admin/video/${id}`);
+      const res = await axiosSecure.get(`/admin/link/${id}`);
       return res.data;
     },
   });
@@ -22,18 +22,17 @@ const VideoEditPage = () => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
-    const privacy = form.privacy.value;
-    const term = form.term.value;
-    const videoURLs = form.videoURLs.value.split(",");
-    const updatedVideo = {
+    const link = form.link.value;
+    const access = form.access.value;
+
+    const updatedLink = {
       title: title,
-      privacy: privacy,
-      term: term,
-      videoURLs: videoURLs,
+      access: access,
+      link: link,
     };
     Swal.fire({
       title: "Are you sure?",
-      text: "This will update the video",
+      text: "This will update the link",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#e11d48",
@@ -43,13 +42,13 @@ const VideoEditPage = () => {
       if (result.isConfirmed) {
         setLoading(true);
         axiosSecure
-          .put(`/admin/updateVideo/${id}`, updatedVideo)
+          .put(`/admin/updateLink/${id}`, updatedLink)
           .then((res) => {
             if (res.data.modifiedCount > 0) {
               setLoading(false);
               Swal.fire({
                 title: "Successful!",
-                text: "Your video has been Updated!",
+                text: "Your link has been Updated!",
                 icon: "success",
               });
               refetch();
@@ -59,7 +58,7 @@ const VideoEditPage = () => {
               setLoading(false);
               Swal.fire({
                 title: "Failed!",
-                text: "Couldn't Update the video",
+                text: "Couldn't Update the link",
                 icon: "error",
               });
             }
@@ -69,7 +68,7 @@ const VideoEditPage = () => {
             console.log(err.message);
             Swal.fire({
               title: "Failed!",
-              text: "Couldn't Update the video",
+              text: "Couldn't Update the link",
               icon: "error",
             });
           });
@@ -84,9 +83,8 @@ const VideoEditPage = () => {
           <p className="text-base-content font-bold text-2xl">Processing</p>
         </div>
       )}
-      <AdminTitle>Edit Video</AdminTitle>
-      <p className="font-bold text-xl text-center">{data?.title}</p>
-      {isLoading && "loading"}
+      <AdminTitle>Edit Link</AdminTitle>
+      <p className="font-bold text-xl">{data?.title}</p>
       <div className="w-full flex items-center justify-between px-3">
         <Link
           className="rounded-full p-2 border border-base-content/60"
@@ -94,73 +92,51 @@ const VideoEditPage = () => {
           <FaChevronLeft></FaChevronLeft>
         </Link>
       </div>
+      {isLoading && "loading"}
       <form className="card-body w-full" onSubmit={updateHandler}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-4">
           {/* Title */}
           <div className="form-control md:col-span-2">
             <label className="label">
               <span className="text-lg label-text text-success">
-                Video Title
+                Link Title
               </span>
             </label>
             <input
               type="text"
               defaultValue={data?.title}
               name="title"
-              placeholder="Video Title"
+              placeholder="Link Title"
               className="input input-bordered input-success"
               required
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="text-lg label-text text-success">Term</span>
+              <span className="text-lg label-text text-success">Link URL</span>
             </label>
-            <select
-              className="select select-success w-full max-w-xs"
-              name="term"
-              defaultValue={data?.term}>
-              <option>1-2</option>
-              <option>2-1</option>
-              <option>2-2</option>
-              <option>3-1</option>
-              <option>3-2</option>
-              <option>4-1</option>
-              <option>4-2</option>
-            </select>
+            <input
+              type="text"
+              defaultValue={data?.link}
+              name="link"
+              placeholder="Link URL"
+              className="input input-bordered input-success"
+              required
+            />
           </div>
           <div className="form-control">
             <label className="label">
               <span className="text-lg label-text text-success">
-                Video Privacy
+                Link Privacy
               </span>
             </label>
             <select
-              defaultValue={data?.privacy}
-              name="privacy"
+              defaultValue={data?.access}
+              name="access"
               className="select select-success w-full max-w-xs">
               <option>public</option>
               <option>private</option>
             </select>
-          </div>
-          <div className="form-control md:col-span-2">
-            <label className="label">
-              <span
-                className="text-lg label-text text-success"
-                style={{ fontFamily: "sans-serif" }}>
-                VideoURLs{" "}
-                <span className="text-base-content">
-                  (seperate using commas. Don't use spaces)
-                </span>
-              </span>
-            </label>
-
-            <textarea
-              placeholder="Video URLs"
-              name="videoURLs"
-              defaultValue={data?.videoURLs.join(",")}
-              className="textarea textarea-success min-h-24"
-              required></textarea>
           </div>
         </div>
 
@@ -174,4 +150,4 @@ const VideoEditPage = () => {
   );
 };
 
-export default VideoEditPage;
+export default LinksEditPage;

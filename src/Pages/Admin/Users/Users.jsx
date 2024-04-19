@@ -13,20 +13,26 @@ const Users = () => {
   const [tabIdx, setTabIdx] = useState(1);
 
   return (
-    <div className="flex flex-col items-center justify-start">
+    <div className="flex flex-col items-center justify-start min-h-screen">
       <Helmet>
         <title>{tabIdx == 1 ? "All Users" : "Pending Users"} - Admin</title>
       </Helmet>
       <div role="tablist" className="tabs tabs-boxed max-w-60 mx-auto mt-12">
         <a
           role="tab"
-          className={`tab ${tabIdx == 1 && "tab-active"}`}
+          className={`tab ${
+            tabIdx == 1 &&
+            "bg-success text-white transition-colors duration-300"
+          }`}
           onClick={() => setTabIdx(1)}>
           All
         </a>
         <a
           role="tab"
-          className={`tab ${tabIdx == 2 && "tab-active"}`}
+          className={`tab ${
+            tabIdx == 2 &&
+            "bg-success text-white transition-colors duration-300"
+          }`}
           onClick={() => setTabIdx(2)}>
           Pending
         </a>
