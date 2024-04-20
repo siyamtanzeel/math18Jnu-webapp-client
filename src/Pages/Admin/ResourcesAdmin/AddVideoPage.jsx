@@ -1,33 +1,33 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-import AdminTitle from "../../../Components/AdminTitle";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
+import AdminTitle from "../../../Components/AdminTitle";
 import { FaChevronLeft } from "react-icons/fa";
 
-const AddLinkPage = () => {
-  const id = useParams().id;
+const AddVideoPage = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
   const addHandler = (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
-    const link = form.link.value;
-    const access = form.access.value;
-    const iat = new Date();
-
-    const newLink = {
+    const privacy = form.privacy.value;
+    const term = form.term.value;
+    const videoURLs = form.videoURLs.value.split(",");
+    const newVideo = {
       title: title,
-      access: access,
-      link: link,
-      iat: iat,
+      privacy: privacy,
+      term: term,
+      videoURLs: videoURLs,
+      iat: new Date(),
     };
     Swal.fire({
       title: "Are you sure?",
-      text: "This will add the link to resources",
+      text: "This will add the video to resources",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#e11d48",
@@ -37,13 +37,13 @@ const AddLinkPage = () => {
       if (result.isConfirmed) {
         setLoading(true);
         axiosSecure
-          .post(`/admin/addLink`, newLink)
+          .post(`/admin/addVideo`, newVideo)
           .then((res) => {
             if (res.data.acknowledged) {
               setLoading(false);
               Swal.fire({
                 title: "Successful!",
-                text: "Your link has been Added!",
+                text: "Your video has been added!",
                 icon: "success",
               });
 
@@ -52,7 +52,7 @@ const AddLinkPage = () => {
               setLoading(false);
               Swal.fire({
                 title: "Failed!",
-                text: "Couldn't add the link",
+                text: "Couldn't add the video",
                 icon: "error",
               });
             }
@@ -62,7 +62,7 @@ const AddLinkPage = () => {
             console.log(err.message);
             Swal.fire({
               title: "Failed!",
-              text: "Couldn't add the link",
+              text: "Couldn't add the video",
               icon: "error",
             });
           });
@@ -70,15 +70,15 @@ const AddLinkPage = () => {
     });
   };
   return (
-    <div className="flex flex-col items-center justify-center py-5 space-y-5">
+    <div>
       {loading && (
         <div className="absolute top-0 left-0 z-30 w-full h-full bg-primary/30 backdrop-blur-lg flex flex-col items-center justify-center space-y-3">
           <progress className="progress w-56"></progress>
           <p className="text-base-content font-bold text-2xl">Processing</p>
         </div>
       )}
-      <AdminTitle>Add a Link</AdminTitle>
-      <div className="w-full flex items-center justify-between px-3">
+      <AdminTitle>Add Video</AdminTitle>
+      <div className="w-full flex items-center justify-between px-3 py-7">
         <Link
           className="rounded-full p-2 border border-base-content/60"
           to="/admin/resources">
@@ -91,41 +91,63 @@ const AddLinkPage = () => {
           <div className="form-control md:col-span-2">
             <label className="label">
               <span className="text-lg label-text text-success">
-                Link Title
+                Video Title
               </span>
             </label>
             <input
               type="text"
               name="title"
-              placeholder="Link Title"
+              placeholder="Video Title"
               className="input input-bordered input-success"
               required
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="text-lg label-text text-success">Link URL</span>
+              <span className="text-lg label-text text-success">Term</span>
             </label>
-            <input
-              type="text"
-              name="link"
-              placeholder="Link URL"
-              className="input input-bordered input-success"
-              required
-            />
+            <select
+              className="select select-success w-full max-w-xs"
+              name="term">
+              <option>1-2</option>
+              <option>2-1</option>
+              <option>2-2</option>
+              <option>3-1</option>
+              <option>3-2</option>
+              <option>4-1</option>
+              <option>4-2</option>
+            </select>
           </div>
           <div className="form-control">
             <label className="label">
               <span className="text-lg label-text text-success">
-                Link Privacy
+                Video Privacy
               </span>
             </label>
             <select
-              name="access"
+              name="privacy"
               className="select select-success w-full max-w-xs">
               <option>public</option>
               <option>private</option>
             </select>
+          </div>
+          <div className="form-control md:col-span-2">
+            <label className="label">
+              <span
+                className="text-lg label-text text-success"
+                style={{ fontFamily: "sans-serif" }}>
+                VideoURLs{" "}
+                <span className="text-base-content">
+                  (seperate using commas. Don't use spaces)
+                </span>
+              </span>
+            </label>
+
+            <textarea
+              placeholder="Video URLs"
+              name="videoURLs"
+              className="textarea textarea-success min-h-24"
+              required></textarea>
           </div>
         </div>
 
@@ -139,4 +161,4 @@ const AddLinkPage = () => {
   );
 };
 
-export default AddLinkPage;
+export default AddVideoPage;

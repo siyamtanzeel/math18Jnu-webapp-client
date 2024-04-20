@@ -10,9 +10,6 @@ const ResourcesAdmin = () => {
   const [tabIdx, setTabIdx] = useState(1);
   return (
     <div className="w-full ">
-      <Helmet>
-        <title>Resources - Admin</title>
-      </Helmet>
       <div className="flex flex-col items-center space-y-7 justify-start py-5 min-h-screen">
         <Helmet>
           <title>Resources - Eccentric-18</title>
@@ -48,7 +45,7 @@ const ResourcesAdmin = () => {
           </a>
         </div>
 
-        <div className="">
+        <div className="w-full">
           {tabIdx == 2 && <LinksAdmin></LinksAdmin>}
           {tabIdx == 1 && <VideosAdmin></VideosAdmin>}
           {tabIdx == 3 && <DocsAdmin></DocsAdmin>}

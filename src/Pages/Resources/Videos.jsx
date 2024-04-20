@@ -13,7 +13,7 @@ const Videos = () => {
   });
   return (
     <div
-      className="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-8"
+      className="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start justify-center gap-8"
       data-aos="zoom-out">
       {isLoading && "loading"}
       {data?.map((video) => {

@@ -3,7 +3,7 @@ import Title from "../../../Components/Title";
 
 const AboutUs = () => {
   return (
-    <div>
+    <div className="relative  overflow-hidden">
       <ul className="timeline timeline-vertical py-5">
         <li>
           <div

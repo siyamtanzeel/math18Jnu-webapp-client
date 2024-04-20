@@ -6,8 +6,7 @@ import AdminTitle from "../../../Components/AdminTitle";
 import Swal from "sweetalert2";
 import { FaChevronLeft } from "react-icons/fa";
 
-const AddLinkPage = () => {
-  const id = useParams().id;
+const AddDocPage = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -16,18 +15,24 @@ const AddLinkPage = () => {
     const form = e.target;
     const title = form.title.value;
     const link = form.link.value;
-    const access = form.access.value;
+    const privacy = form.privacy.value;
+    const media = form.media.value;
+    const category = form.category.value;
+    const term = form.term.value;
     const iat = new Date();
 
-    const newLink = {
+    const newDoc = {
       title: title,
-      access: access,
       link: link,
+      media: media,
+      category: category,
+      privacy: privacy,
+      term: term,
       iat: iat,
     };
     Swal.fire({
       title: "Are you sure?",
-      text: "This will add the link to resources",
+      text: "This will add the doc to resources",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#e11d48",
@@ -37,13 +42,13 @@ const AddLinkPage = () => {
       if (result.isConfirmed) {
         setLoading(true);
         axiosSecure
-          .post(`/admin/addLink`, newLink)
+          .post(`/admin/addDoc`, newDoc)
           .then((res) => {
             if (res.data.acknowledged) {
               setLoading(false);
               Swal.fire({
                 title: "Successful!",
-                text: "Your link has been Added!",
+                text: "Your doc has been Added!",
                 icon: "success",
               });
 
@@ -52,7 +57,7 @@ const AddLinkPage = () => {
               setLoading(false);
               Swal.fire({
                 title: "Failed!",
-                text: "Couldn't add the link",
+                text: "Couldn't add the doc",
                 icon: "error",
               });
             }
@@ -62,7 +67,7 @@ const AddLinkPage = () => {
             console.log(err.message);
             Swal.fire({
               title: "Failed!",
-              text: "Couldn't add the link",
+              text: "Couldn't add the doc",
               icon: "error",
             });
           });
@@ -77,7 +82,7 @@ const AddLinkPage = () => {
           <p className="text-base-content font-bold text-2xl">Processing</p>
         </div>
       )}
-      <AdminTitle>Add a Link</AdminTitle>
+      <AdminTitle>Add a Doc</AdminTitle>
       <div className="w-full flex items-center justify-between px-3">
         <Link
           className="rounded-full p-2 border border-base-content/60"
@@ -90,9 +95,7 @@ const AddLinkPage = () => {
           {/* Title */}
           <div className="form-control md:col-span-2">
             <label className="label">
-              <span className="text-lg label-text text-success">
-                Link Title
-              </span>
+              <span className="text-lg label-text text-success">Doc Title</span>
             </label>
             <input
               type="text"
@@ -104,7 +107,7 @@ const AddLinkPage = () => {
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="text-lg label-text text-success">Link URL</span>
+              <span className="text-lg label-text text-success">Doc URL</span>
             </label>
             <input
               type="text"
@@ -117,14 +120,55 @@ const AddLinkPage = () => {
           <div className="form-control">
             <label className="label">
               <span className="text-lg label-text text-success">
-                Link Privacy
+                Doc Privacy
               </span>
             </label>
             <select
-              name="access"
+              name="privacy"
               className="select select-success w-full max-w-xs">
               <option>public</option>
               <option>private</option>
+            </select>
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="text-lg label-text text-success">
+                Media Type
+              </span>
+            </label>
+            <select
+              name="media"
+              className="select select-success w-full max-w-xs">
+              <option>Photo</option>
+              <option>PDF</option>
+            </select>
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="text-lg label-text text-success">Category</span>
+            </label>
+            <select
+              name="category"
+              className="select select-success w-full max-w-xs">
+              <option>Routine</option>
+              <option>Syllabus</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="text-lg label-text text-success">Term</span>
+            </label>
+            <select
+              className="select select-success w-full max-w-xs"
+              name="term">
+              <option>1-2</option>
+              <option>2-1</option>
+              <option>2-2</option>
+              <option>3-1</option>
+              <option>3-2</option>
+              <option>4-1</option>
+              <option>4-2</option>
             </select>
           </div>
         </div>
@@ -139,4 +183,4 @@ const AddLinkPage = () => {
   );
 };
 
-export default AddLinkPage;
+export default AddDocPage;

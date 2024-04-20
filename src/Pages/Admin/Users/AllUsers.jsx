@@ -65,8 +65,14 @@ const AllUsers = () => {
   };
   return (
     <div className="text-center py-5 px-3 flex flex-col items-center justify-center space-y-5 ">
+      {allLoading && (
+        <div className="absolute top-0 left-0 z-30 w-full h-full bg-primary/30 backdrop-blur-lg flex flex-col items-center justify-center space-y-3">
+          <progress className="progress w-56"></progress>
+          <p className="text-base-content font-bold text-2xl">Processing</p>
+        </div>
+      )}
       <AdminTitle>All Users</AdminTitle>
-      {allLoading && "Loading"}
+
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -79,46 +85,52 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody className="">
-            {allStudents?.map((student) => {
-              const { name, phone, photoURL, isAdmin, _id } = student;
-              return (
-                <tr key={name}>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
-                          <img
-                            src={photoURL || "/public/img/userIcon.png"}
-                            alt={name}
-                          />
+            {!allStudents?.length ? (
+              <div className="text-xl text-center font-bold mx-auto h-[360px] w-full flex items-center justify-center">
+                <p>Couldn't retrieve data</p>
+              </div>
+            ) : (
+              allStudents?.map((student) => {
+                const { name, phone, photoURL, isAdmin, _id } = student;
+                return (
+                  <tr key={name}>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img
+                              src={photoURL || "/public/img/userIcon.png"}
+                              alt={name}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{name}</div>
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{name}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    {isAdmin ? (
-                      <span className="text-secondary font-bold">Admin</span>
-                    ) : (
-                      "User"
-                    )}
-                  </td>
-                  <td className="hidden md:flex">{phone}</td>
-                  <th>
-                    <button
-                      className={`btn btn-secondary btn-xs md:btn-md text-white md:text-xl ${
-                        isAdmin || " shadow-lg shadow-secondary/50"
-                      }`}
-                      onClick={() => handleDelete(_id)}
-                      disabled={isAdmin}>
-                      <FaTrash />
-                    </button>
-                  </th>
-                </tr>
-              );
-            })}
+                    </td>
+                    <td>
+                      {isAdmin ? (
+                        <span className="text-secondary font-bold">Admin</span>
+                      ) : (
+                        "User"
+                      )}
+                    </td>
+                    <td className="hidden md:flex">{phone}</td>
+                    <th>
+                      <button
+                        className={`btn btn-secondary btn-xs md:btn-md text-white md:text-xl ${
+                          isAdmin || " shadow-lg shadow-secondary/50"
+                        }`}
+                        onClick={() => handleDelete(_id)}
+                        disabled={isAdmin}>
+                        <FaTrash />
+                      </button>
+                    </th>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
           {/* foot */}
         </table>

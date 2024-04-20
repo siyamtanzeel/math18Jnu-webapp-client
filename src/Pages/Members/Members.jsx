@@ -32,8 +32,8 @@ const Members = () => {
           <span className="loading loading-ring loading-lg"></span>
         </div>
       )} */}
-      <div className="text-base-content font-semibold text-xl">
-        <div className="join">
+      <div className="text-base-content font-semibold text-xl ">
+        <div className="join bg-base-100 shadow-xl">
           <button
             className="join-item btn text-2xl"
             disabled={!isLoading && startIdx - 6 < 0 && true}
@@ -57,7 +57,7 @@ const Members = () => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 items-center justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 items-start justify-center">
         {isLoading &&
           [1, 2, 3, 4, 5, 6].map((idx) => (
             <div

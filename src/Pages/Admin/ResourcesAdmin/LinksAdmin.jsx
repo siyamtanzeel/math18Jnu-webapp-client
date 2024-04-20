@@ -61,14 +61,14 @@ const LinksAdmin = () => {
     });
   };
   return (
-    <div className="flex flex-col items-center justify-center space-y-5">
+    <div className="flex flex-col items-center justify-center">
       {(isLoading || loading) && (
         <div className="absolute top-0 left-0 z-30 w-full h-full bg-primary/30 backdrop-blur-lg flex flex-col items-center justify-center space-y-3">
           <progress className="progress w-56"></progress>
           <p className="text-base-content font-bold text-2xl">Processing</p>
         </div>
       )}
-      <div className="w-full flex items-center justify-between px-3">
+      <div className="w-full flex items-center justify-between px-3 py-7">
         <Link
           className="rounded-full p-2 border border-base-content/60"
           to="/admin">
@@ -114,12 +114,12 @@ const LinksAdmin = () => {
                     <td className="space-x-1 flex">
                       <Link
                         to={`/admin/link/${_id}`}
-                        className="btn btn-sm btn-neutral text-xl">
+                        className="btn btn-sm btn-neutral text-xl shadow-lg shadow-neutral/50">
                         <FaEdit></FaEdit>
                       </Link>
                       <button
                         onClick={() => handleDelete(_id)}
-                        className="btn btn-sm btn-secondary text-xl">
+                        className="btn btn-sm btn-secondary text-xl shadow-lg shadow-secondary/50">
                         <FaTrash></FaTrash>
                       </button>
                     </td>

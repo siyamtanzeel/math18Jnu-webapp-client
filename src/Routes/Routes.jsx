@@ -24,6 +24,8 @@ import VideoEditPage from "../Pages/Admin/ResourcesAdmin/VideoEditPage.jsx";
 import AdminTitle from "../Components/AdminTitle.jsx";
 import LinksEditPage from "../Pages/Admin/ResourcesAdmin/LinksEditPage.jsx";
 import AddLinkPage from "../Pages/Admin/ResourcesAdmin/AddLinkPage.jsx";
+import AddVideoPage from "../Pages/Admin/ResourcesAdmin/AddVideoPage.jsx";
+import AddDocPage from "../Pages/Admin/ResourcesAdmin/AddDoc.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -133,6 +135,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/admin/addVideo",
+        element: (
+          <AdminRoutes>
+            <AddVideoPage></AddVideoPage>
+          </AdminRoutes>
+        ),
+      },
+      {
         path: "/admin/link/:id",
         element: (
           <AdminRoutes>
@@ -145,6 +155,22 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <AddLinkPage></AddLinkPage>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "/admin/link/:id",
+        element: (
+          <AdminRoutes>
+            <LinksEditPage></LinksEditPage>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "/admin/addDoc",
+        element: (
+          <AdminRoutes>
+            <AddDocPage></AddDocPage>
           </AdminRoutes>
         ),
       },
