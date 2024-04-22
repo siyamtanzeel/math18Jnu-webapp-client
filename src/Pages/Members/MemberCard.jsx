@@ -42,13 +42,6 @@ const MemberCard = ({ student }) => {
             className="btn bg-secondary hover:bg-secondary/70 text-white border-none shadow-lg shadow-secondary/50">
             Connect
           </a>
-          {userStudent?.isAdmin && (
-            <Link
-              to={`/editProfile/${std_id}`}
-              className="btn bg-secondary text-white">
-              Edit Profile
-            </Link>
-          )}
         </div>
       </div>
     </div>

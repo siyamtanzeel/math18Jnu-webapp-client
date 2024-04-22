@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        fetch(`http://localhost:5000/userAuth`, {
+        fetch(`https://math18jnu-webapp-server.vercel.app/userAuth`, {
           method: "POST",
           headers: {
             "content-type": "application/json",

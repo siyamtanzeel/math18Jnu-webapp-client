@@ -146,8 +146,8 @@ const Navbar = () => {
             <img
               src={
                 darkMode
-                  ? "/public/img/eccentric18logo-white.png"
-                  : "/public/img/eccentric18logo-black.png"
+                  ? "/img/eccentric18logo-white.png"
+                  : "/img/eccentric18logo-black.png"
               }
               alt=""
               className="w-16"

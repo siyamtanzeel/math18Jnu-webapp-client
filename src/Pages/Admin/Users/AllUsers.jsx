@@ -99,7 +99,7 @@ const AllUsers = () => {
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
                             <img
-                              src={photoURL || "/public/img/userIcon.png"}
+                              src={photoURL || "/img/userIcon.png"}
                               alt={name}
                             />
                           </div>

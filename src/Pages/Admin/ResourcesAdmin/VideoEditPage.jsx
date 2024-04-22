@@ -86,7 +86,6 @@ const VideoEditPage = () => {
       )}
       <AdminTitle>Edit Video</AdminTitle>
       <p className="font-bold text-xl text-center">{data?.title}</p>
-      {isLoading && "loading"}
       <div className="w-full flex items-center justify-between px-3">
         <Link
           className="rounded-full p-2 border border-base-content/60"

@@ -47,9 +47,9 @@ const UserPage = () => {
           speed={500}
           elementClassNames="flex items-center justify-center"
           plugins={[lgThumbnail, lgZoom]}>
-          <a href={photoURL || "/public/img/userIcon.png"} data-aos="zoom-in">
+          <a href={photoURL || "/img/userIcon.png"} data-aos="zoom-in">
             <img
-              src={photoURL || "/public/img/userIcon.png"}
+              src={photoURL || "/img/userIcon.png"}
               alt={name}
               className="w-64 h-64 rounded-full object-cover"
             />
@@ -61,14 +61,9 @@ const UserPage = () => {
         <div className="flex items-center justify-center space-x-2">
           <a
             href={facebook}
-            className="btn btn-primary text-white border-none shadow-lg shadow-primary/50">
+            className="btn btn-secondary text-white border-none shadow-lg shadow-secondary/50">
             Connect
           </a>
-          <Link
-            to={`/editProfile/${std_id}`}
-            className="btn bg-rose-500 hover:bg-rose-800 text-white border-none shadow-lg shadow-secondary/50">
-            Edit Profile
-          </Link>
         </div>
       </div>
       <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-16 ">

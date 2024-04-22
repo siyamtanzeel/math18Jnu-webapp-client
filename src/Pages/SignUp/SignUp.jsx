@@ -32,7 +32,7 @@ const SignUp = () => {
     const name = form.name.value.trim();
     const email = form.email.value.trim();
     const password = form.password.value.trim();
-    const student_id = form.studentID.value.trim();
+    const std_id = form.studentID.value.trim();
     const ques1 = form.ques1.value.trim();
     const ques2 = form.ques2.value.trim();
     const ques3 = form.ques3.value.trim();
@@ -43,7 +43,7 @@ const SignUp = () => {
       name: name,
       email: email,
       password: password,
-      student_id: student_id,
+      std_id: std_id,
       ques1: ques1,
       ques2: ques2,
       ques3: ques3,
@@ -182,7 +182,7 @@ const SignUp = () => {
               <div className="form-control font-bengali">
                 <label className="label">
                   <span className="text-lg label-text text-primary">
-                    ব্যাচের {`" খালাতো ভাই "`} কে?
+                    সব নারীর {`" খালাতো ভাই "`} কে?
                   </span>
                 </label>
                 <input

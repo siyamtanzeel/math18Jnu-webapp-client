@@ -16,7 +16,7 @@ const Home = () => {
         <HomeCarousel></HomeCarousel>
         <Banner></Banner>
       </div>
-      {/* <Announcements></Announcements> */}
+      <Announcements></Announcements>
       <AboutUs></AboutUs>
       <Gallery></Gallery>
     </div>

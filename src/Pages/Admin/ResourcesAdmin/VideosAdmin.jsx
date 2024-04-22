@@ -91,7 +91,6 @@ const VideosAdmin = () => {
           </thead>
           <tbody className="rounded-md bg-base-100 space-y-1">
             {/* row 1 */}
-            {isLoading && "Loading"}
             {data?.map((item) => {
               const { _id, title } = item;
               return (

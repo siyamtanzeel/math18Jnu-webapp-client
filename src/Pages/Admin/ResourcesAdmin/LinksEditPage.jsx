@@ -92,7 +92,6 @@ const LinksEditPage = () => {
           <FaChevronLeft></FaChevronLeft>
         </Link>
       </div>
-      {isLoading && "loading"}
       <form className="card-body w-full" onSubmit={updateHandler}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-4">
           {/* Title */}

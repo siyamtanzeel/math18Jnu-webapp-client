@@ -83,11 +83,7 @@ const Login = () => {
     <div className="hero h-screen bg-base-100">
       <div className="hero-content flex-col md:flex-row items-center justify-center space-y-4">
         <div className="text-center lg:text-left">
-          <img
-            src="/public/img/login.png"
-            alt=""
-            className="w-[360px] md:w-[500px]"
-          />
+          <img src="/img/login.png" alt="" className="w-[360px] md:w-[500px]" />
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body" onSubmit={signInHandler}>

@@ -15,7 +15,11 @@ const Videos = () => {
     <div
       className="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start justify-center gap-8"
       data-aos="zoom-out">
-      {isLoading && "loading"}
+      {isLoading && (
+        <div className="absolute top-0 left-0 h-[400px] flex items-center justify-center w-full">
+          <progress className="progress w-56"></progress>
+        </div>
+      )}
       {data?.map((video) => {
         const { _id, title, videoURLs, privacy, term } = video;
         return (

@@ -26,6 +26,8 @@ import LinksEditPage from "../Pages/Admin/ResourcesAdmin/LinksEditPage.jsx";
 import AddLinkPage from "../Pages/Admin/ResourcesAdmin/AddLinkPage.jsx";
 import AddVideoPage from "../Pages/Admin/ResourcesAdmin/AddVideoPage.jsx";
 import AddDocPage from "../Pages/Admin/ResourcesAdmin/AddDoc.jsx";
+import DocEditPage from "../Pages/Admin/ResourcesAdmin/DocEditPage.jsx";
+import AddUserPage from "../Pages/Admin/Users/AddUserPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -79,7 +81,9 @@ export const router = createBrowserRouter([
         path: "/member/:id",
         element: <StudentPage></StudentPage>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/student/${params.id}`),
+          fetch(
+            `https://math18jnu-webapp-server.vercel.app/student/${params.id}`
+          ),
       },
       {
         path: "/editProfile",
@@ -117,6 +121,10 @@ export const router = createBrowserRouter([
             <Users></Users>
           </AdminRoutes>
         ),
+      },
+      {
+        path: "/admin/addUser/:id",
+        element: <AddUserPage></AddUserPage>,
       },
       {
         path: "/admin/resources",
@@ -171,6 +179,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoutes>
             <AddDocPage></AddDocPage>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "/admin/doc/:id",
+        element: (
+          <AdminRoutes>
+            <DocEditPage></DocEditPage>
           </AdminRoutes>
         ),
       },

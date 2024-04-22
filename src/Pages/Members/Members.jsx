@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MemberCard from "./MemberCard";
 import useStudents from "../../hooks/useStudents";
-import { useQuery } from "@tanstack/react-query";
+import { QueryCache, useQuery } from "@tanstack/react-query";
 
 import Title from "../../Components/Title";
 import { Helmet } from "react-helmet-async";
@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 const Members = () => {
   // const [students, setStudents] = useState([]);
   // useEffect(() => {
-  //   fetch("http://localhost:5000/students")
+  //   fetch("https://math18jnu-webapp-server.vercel.app/students")
   //     .then((res) => res.json())
   //     .then((data) => {
   //       setStudents(data);

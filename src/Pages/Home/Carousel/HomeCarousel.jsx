@@ -27,14 +27,14 @@ export default function HomeCarousel() {
         className="mySwiper">
         <SwiperSlide>
           <img
-            src="/public/img/eccentric-18-cover.jpg"
+            src="/img/eccentric-18-cover.jpg"
             alt=""
             className=" h-[260px] md:h-[460px] lg:h-[520px] w-full object-cover"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="/public/img/eccentric-18-group-photo.jpg"
+            src="/img/eccentric-18-group-photo.jpg"
             alt=""
             className="h-[260px] md:h-[460px] lg:h-[520px] w-full object-cover"
           />

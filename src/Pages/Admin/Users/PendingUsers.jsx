@@ -9,6 +9,7 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 
 import AdminTitle from "../../../Components/AdminTitle";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
 const PendingUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -81,14 +82,14 @@ const PendingUsers = () => {
           </thead>
           <tbody>
             {data?.map((user) => {
-              const { name, email, student_id } = user;
+              const { _id, name, email, student_id } = user;
               return (
                 <tr key={student_id}>
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                          <img src="/public/img/userIcon.png" alt="User" />
+                          <img src="/img/userIcon.png" alt="User" />
                         </div>
                       </div>
                       <div className="font-bold">{name}</div>
@@ -102,9 +103,11 @@ const PendingUsers = () => {
                     </span>
                   </td>
                   <td className="">
-                    <button className="btn btn-sm btn-neutral text-white text-xl shadow-lg shadow-neutral/50 my-auto">
+                    <Link
+                      to={`/admin/addUser/${_id}`}
+                      className="btn btn-sm btn-neutral text-white text-xl shadow-lg shadow-neutral/50 my-auto">
                       <IoDocumentTextOutline></IoDocumentTextOutline>
-                    </button>
+                    </Link>
                   </td>
                   <th className="space-x-1 flex items-end justify-end">
                     <button className="btn btn-sm btn-success text-white text-xl shadow-lg shadow-success/50">

@@ -14,6 +14,11 @@ const Docs = () => {
   });
   return (
     <div>
+      {isLoading && (
+        <div className="absolute top-0 left-0 h-[400px] flex items-center justify-center w-full">
+          <progress className="progress w-56"></progress>
+        </div>
+      )}
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -27,7 +32,7 @@ const Docs = () => {
           </thead>
           <tbody className="rounded-md bg-base-100 space-y-1">
             {/* row 1 */}
-            {isLoading && "Loading"}
+
             {data?.map((item) => {
               const { _id, title, link, media, term } = item;
               return (
