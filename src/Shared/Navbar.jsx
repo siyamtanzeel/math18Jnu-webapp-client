@@ -87,6 +87,9 @@ const Navbar = () => {
                     <NavLink to="/members">All</NavLink>
                   </li>
                   <li>
+                    <NavLink to="/committee">Committee</NavLink>
+                  </li>
+                  <li>
                     <NavLink to="/findByBlood">By Blood</NavLink>
                   </li>
                 </ul>

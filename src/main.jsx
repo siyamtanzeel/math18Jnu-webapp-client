@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import AOS from "aos/dist/aos.js";
@@ -12,19 +12,15 @@ import DarkModeProvider from "./Providers/DarkModeProvider.jsx";
 import { HelmetProvider } from "react-helmet-async";
 
 const queryClient = new QueryClient();
-// useEffect(()=>{
-//   AOS.init();
-// },[])
+AOS.init();
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <DarkModeProvider>
-        <AuthProvider>
-          <HelmetProvider>
-            <RouterProvider router={router}></RouterProvider>
-          </HelmetProvider>
-        </AuthProvider>
-      </DarkModeProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <DarkModeProvider>
+      <AuthProvider>
+        <HelmetProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </HelmetProvider>
+      </AuthProvider>
+    </DarkModeProvider>
+  </QueryClientProvider>
 );

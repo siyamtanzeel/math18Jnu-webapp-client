@@ -82,9 +82,9 @@ const PendingUsers = () => {
           </thead>
           <tbody>
             {data?.map((user) => {
-              const { _id, name, email, student_id } = user;
+              const { _id, name, email, std_id } = user;
               return (
-                <tr key={student_id}>
+                <tr key={std_id}>
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
@@ -96,7 +96,7 @@ const PendingUsers = () => {
                     </div>
                   </td>
                   <td className="hidden md:block">
-                    {student_id}
+                    {std_id}
                     <br />
                     <span className="badge badge-primary text-white badge-sm">
                       {email}

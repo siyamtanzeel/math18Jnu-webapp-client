@@ -68,7 +68,7 @@ const AddUserPage = () => {
       name: user.name,
       email: user.email,
       password: user.password,
-      std_id: user.student_id,
+      std_id: user.std_id,
     };
     Swal.fire({
       title: "Are you sure?",
@@ -290,7 +290,7 @@ const AddUserPage = () => {
               type="text"
               placeholder="College"
               className="input input-bordered"
-              defaultValue={user?.student_id}
+              defaultValue={user?.std_id}
               disabled
             />
           </div>

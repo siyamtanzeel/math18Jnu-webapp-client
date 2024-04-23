@@ -154,8 +154,7 @@ const EditProfile = () => {
             <label className="label">
               <span className="label-text text-primary font-bold">Bio</span>
             </label>
-            <input
-              type="text"
+            <textarea
               placeholder="bio"
               className="input input-bordered"
               defaultValue={user?.bio}

@@ -55,9 +55,11 @@ const UserPage = () => {
             />
           </a>
         </LightGallery>
-        <h1 className="text-primary text-2xl font-semibold">{name}</h1>
-        <p className="text-base-content font-bold">{bio}</p>
-        <p className="text-secondary font-bold">{userData?.role}</p>
+        <h1 className="text-primary text-2xl font-semibold text-center">
+          {name}
+        </h1>
+        <p className="text-base-content font-bold text-center">{bio}</p>
+        <p className="text-secondary font-bold text-center">{userData?.role}</p>
         <div className="flex items-center justify-center space-x-2">
           <a
             href={facebook}
@@ -68,7 +70,7 @@ const UserPage = () => {
       </div>
       <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-16 ">
         <div className="overflow-x-auto rounded-lg">
-          <h3 className="font-semibold text-center text-primary pt-3">
+          <h3 className="font-semibold text-center text-primary pt-5">
             Information
           </h3>
           <div className="divider"></div>
